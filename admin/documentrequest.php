@@ -18,37 +18,57 @@
     <div class="main">
     <h1 class="w-100 text-center">Document Requests</h1>
         <div class="container bg-info ">
-        <button class="btn">View Processed Request</button>
-        <button class="btn">View Unprocessed Request</button>
-        <button class="btn">View Onsite Request</button>
+            <div class="w-75">
+        <button class="btn w-25">View Processed Request</button>
+        <button class="btn w-25">View Processed Request</button>
+        <button class="btn w-25">View Onsite Request</button>
+            </div>
         <div class="section1">
-            <table class="w-100 text-center">
+            <h6>Unprocessed Request</h6>
+            <table class="w-100 table">
+               <thead class="thead-dark text-center">
                 <tr>
                     <th>Requestor's Name</th>
                     <th>Contact No.</th>
                     <th>Document Requested</th>
                     <th>Date Requested</th>
+                    <th>Action</th>
+
               </tr>
+            </thead>
             </table>
         </div>
         <div class="section2">
-            <table class="w-100 text-center">
+        <h6>Processed Request</h6>
+
+            <table class="w-100 text-center table">
+            <thead class="thead-dark text-center">
                 <tr>
                     <th>Requestor's Name</th>
                     <th>Contact No.</th>
                     <th>Document Requested</th>
                     <th>Date Requested</th>
+                    <th>Action</th>
+
               </tr>
+            </thead>
+
             </table>
         </div>
-        <div class="section3    ">
-            <table class="w-100 text-center">
+        <div class="section3">
+        <h6>On-site Request</h6>
+
+            <table class="w-100 text-center table">
+            <thead class="thead-dark text-center">
                 <tr>
                     <th>Requestor's Name</th>
                     <th>Contact No.</th>
                     <th>Document Requested</th>
                     <th>Date Requested</th>
+                    <th>Action</th>
+
               </tr>
+            </thead>
             </table>
         </div>
         

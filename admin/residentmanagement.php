@@ -21,21 +21,27 @@
             <button class="btn">Switch to Resident View</button>
             <button class="btn">Switch to Family View</button>
         <div class="section1">
-            <table class="w-100 text-center">
-                <tr>
-                    <th>Household No.</th>
-                    <th>Family Name</th>
-                    <th>Purok</th>
-                    <th>Full Address</th>
+            <table class="w-100 text-center table">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th>Household No.</th>
+                        <th>Family Name</th>
+                        <th>Purok</th>
+                        <th>Full Address</th>
 
-              </tr>
+                    </tr>
+                </thead>
+
             </table>
-            <button class="btn">Add</button>
-            <button class="btn">Delete</button>
-            <button class="btn">Edit</button>
+            <div class="w-75">
+            <button class="btn w-25">Add</button>
+            <button class="btn w-25">Delete</button>
+            <button class="btn w-25">Edit</button>
+            </div>
         </div>
         <div class="section1">
-            <table class="w-100 text-center">
+            <table class="w-100 text-center table">
+            <thead class="thead-dark text-center">
                 <tr>
                     <th>Lastname</th>
                     <th>Firstname</th>
@@ -46,10 +52,13 @@
 
 
               </tr>
+            </thead>
             </table>
-            <button class="btn">Add</button>
-            <button class="btn">Delete</button>
-            <button class="btn">Edit</button>
+            <div class="w-75">
+                <button class="btn w-25">Add</button>
+            <button class="btn w-25">Delete</button>
+            <button class="btn w-25">Edit</button>
+            </div>
         </div>
         
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In</title>
+    <title>Barangay Officials</title>
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
@@ -15,7 +15,25 @@
     <div>
         <img>
     </div>
-    
+    <div class="main">
+        <h2 class="text-center">Barangay Officials</h2>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col">
+            <table class="table">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th>Position</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+            </table>
+            <button class="btn-danger w-25">Edit</button>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+    </div>
 
 </body>
 <script src="../js/bootstrap.bundle.js"></script>

@@ -19,17 +19,21 @@
         <h1 class="w-100 text-center">Medicine Cabinet</h1>
         <div class="container bg-info ">
         <div class="section1">
-            <table class="w-100 text-center">
+        <button class="btn w-25">Print Request</button>
+
+        <table class="w-100 text-center table">
+            <thead class="thead-dark text-center">
                 <tr>
                     <th>Brand Name</th>
                     <th>Generic Name</th>
                     <th>Quantity</th>
               </tr>
             </table>
-            <button class="btn">Add</button>
-            <button class="btn">Delete</button>
-            <button class="btn">Edit</button>
-            <button class="btn">Print Request</button>
+            <div class="w-75">
+            <button class="btn w-25">Add</button>
+            <button class="btn w-25">Delete</button>
+            <button class="btn w-25">Edit</button>
+            </div>
             
         </div>
         
