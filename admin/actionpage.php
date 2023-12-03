@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once("connection.php");
 
 if(isset($_GET["addtofamname"]) && isset($_GET["addtohouseno"])){
@@ -19,4 +20,16 @@ if(isset($_GET["deletehouseno"])){
     $mysqli->query($query);
 }
 
+if(isset($_GET["updatename"]) && isset($_GET["houseupdate"])){
+    $update = "UPDATE tbl_family SET householdName = '".$_GET["updatename"]."', purok  = '".$_GET["updatepurok"]."' WHERE houseNumber = '".$_GET["houseupdate"]."'";
+        
+        $mysqli->query($update);
+        echo $update;
+    
+    
+}
+
+if(isset($_GET["setpage"])){
+$_SESSION['page'] = $_GET['setpage'];
+}
 ?>
