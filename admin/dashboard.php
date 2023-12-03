@@ -8,77 +8,101 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
 </head>
+<style>
+.section{
+background-color: #FFC5C5;
+border-radius: 2%;
+box-shadow: 5px 10px #888888;
+}
 
+.section:hover{
+    box-shadow: 2px 2px 0px 4px #00C5C5;
+    transition: 1s;
+    background-color: #00C5C5;
+    cursor:pointer;
+
+
+}
+</style>
 <body>
     <h1 class="w-100 text-center">Admin Dashboard</h1>
-    <div class="row text-center mx-5 py-2">
-        <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+    <div class="row text-center m-auto py-2 container">
+        <div class="col-4 my-2 ">
+            <div class="container my-4 p-2 section" onClick="location.href='residentmanagement.php'">
                 <h6>Resident Management</h6>
+                <img src="img/Resident.png" class="img-thumbnail img-fluid">
                 
                 
             </div>
 
         </div>
     
-        <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+        <div class="col-4 my-2 ">
+            <div class="container my-4 p-2 section"  onClick="location.href='medicinecabinet.php'" >
                 <h6>Medicine Cabinet</h6>
+                <img src="img/mediine.png" class="img-thumbnail img-fluid">
 
                 
             </div>
 
         </div>
         <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+            <div class="container my-4   p-2 section"  onClick="location.href='documentrequest.php'">
                 <h6>Document Request</h6>
+                <img src="img/document.png" class="img-thumbnail img-fluid">
                 
             </div>
 
         </div>
         <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+            <div class="container my-4   p-2 section"  onClick="location.href='barangayofficials.php'" >
                 <h6>Barangay Officials</h6>
+                <img src="img/chart.png" class="img-thumbnail img-fluid">
+
 
                 
              </div>
 
         </div>
         <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+            <div class="container my-4   p-2 section"  onClick="location.href='manageaccount.php'">
                 <h6>Website Account Management</h6>
+                <img src="img/account.png" class="img-thumbnail img-fluid">
+
 
                 
              </div>
 
         </div>
-        <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+        <div class="col-4 my-2 ">
+            <div class="container my-4  p-2 section"  onClick="location.href='publicannouncement.php'" >
                 <h6>Public Announcement</h6>
-
+                <img src="img/announcement.png" class="img-thumbnail img-fluid">
                 
              </div>
 
         </div>
-        <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+        <div class="col-4 my-2 ">
+            <div class="container my-4 p-2 section"  onClick="location.href='treasurer.php'" >
                 <h6>Treasurer's Page</h6>
+                <img src="img/treasurer.png" class="img-thumbnail img-fluid">
 
                 
              </div>
 
         </div>
-        <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+        <div class="col-4 my-2 ">
+            <div class="container my-4 p-2 section"  onClick="location.href='interactivemap.php'" >
                 <h6>Interactive Map</h6>
 
                 
              </div>
 
         </div>
-        <div class="col-4 my-2">
-            <div class="container my-4 bg-info" >
+        <div class="col-4 my-2 ">
+            <div class="container my-4 section p-2"  onClick="location.href='logout.php'" >
                 <h6>Logout</h6>
+                <img src="img/logout.png" class="img-thumbnail img-fluid">
 
                 
              </div>
