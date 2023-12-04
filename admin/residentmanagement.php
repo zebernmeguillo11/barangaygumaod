@@ -101,8 +101,8 @@ $_SESSION['limit1'] = 1;
 
 <body>
     <div class="nav">
-        <button class="btn btnnav p-0" title="Go to Home"><img src="img/homepage.png"  class="img-thumbnail img-fluid"></button>
-        <button class="btn btnnav p-0" id="logoutbtn" title="Logout"><img src="img/logout.png"  class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" title="Go to Home"  onClick="location.href='dashboard.php'"><img src="img/homepage.png"  class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"  class="img-thumbnail img-fluid"></button>
     </div>
     <div class="main">
         <h1 class="w-100 text-center">Resident Management</h1>
@@ -537,6 +537,13 @@ $_SESSION['limit1'] = 1;
 <script type="text/javascript" src="jquery.js"></script>
 
 <script>
+    function logout(){
+        var conf =confirm("Logout?");
+        if(conf){
+            window.location.href = "logout.php";
+        }
+    }
+
     function checkall(e) {
         $(':checkbox.famcheck').prop('checked', e.checked);
     }

@@ -57,20 +57,67 @@ if (isset($_GET["setpage1"])) {
 
 if (isset($_GET["addmedbrand"]) && isset($_GET["genname"])) {
 
-        $sql = "INSERT INTO `tbl_medicine` (`medicine_id`, `brandname`, `genericname`, `quantity`, `unit`) VALUES (DEFAULT, '".$_GET["addmedbrand"]."', '".$_GET["genname"]."', '".$_GET["quantity"]."', '".$_GET["unit"]."')";
-        $mysqli->query($sql);
+    $sql = "INSERT INTO `tbl_medicine` (`medicine_id`, `brandname`, `genericname`, `quantity`, `unit`) VALUES (DEFAULT, '" . $_GET["addmedbrand"] . "', '" . $_GET["genname"] . "', '" . $_GET["quantity"] . "', '" . $_GET["unit"] . "')";
+    $mysqli->query($sql);
 
 }
 
 if (isset($_GET["deletemed"])) {
-    $query = "DELETE FROM tbl_medicine WHERE medicine_id = '" .$_GET["deletemed"]."'";
+    $query = "DELETE FROM tbl_medicine WHERE medicine_id = '" . $_GET["deletemed"] . "'";
     $mysqli->query($query);
 }
 
-if(isset($_GET['medid']) || isset($_GET['editbrand'])){
-    $sql = "UPDATE `tbl_medicine` SET `brandname` = '".$_GET['editbrand']."', `genericname` = '".$_GET['genname']."', `quantity` = '".$_GET["quantity"]."', `unit` = '".$_GET["unit"]."' WHERE `tbl_medicine`.`medicine_id` = '".$_GET['medid']."'";
+if (isset($_GET['medid']) || isset($_GET['editbrand'])) {
+    $sql = "UPDATE `tbl_medicine` SET `brandname` = '" . $_GET['editbrand'] . "', `genericname` = '" . $_GET['genname'] . "', `quantity` = '" . $_GET["quantity"] . "', `unit` = '" . $_GET["unit"] . "' WHERE `tbl_medicine`.`medicine_id` = '" . $_GET['medid'] . "'";
     $mysqli->query($sql);
 
 }
+
+if (isset($_GET['addtitle']) && isset($_GET['desc'])) {
+
+    $img = "";
+    if (isset($_SESSION['uploadimg'])) {
+        $img = $_SESSION['uploadimg'];
+    } else {
+        $img = 'sample.jpg';
+    }
+    $sql = "INSERT INTO `tbl_announcement` (`id`, `title`, `description`, `date`, `img`) VALUES (DEFAULT, '" . $_GET['addtitle'] . "', '" . $_GET['desc'] . "', NOW(), '" . $img . "')";
+    $mysqli->query($sql);
+    unset($_SESSION["uploadimg"]);
+}
+
+
+if (isset($_GET['id']) && isset($_GET['edittitle'])) {
+
+    $img = "";
+    if (isset($_SESSION['editimg'])) {
+        $img = $_SESSION['editimg'];
+    } else {
+        $img = 'sample.jpg';
+    }
+    $sql = "UPDATE `tbl_announcement` SET `title` = '" . $_GET['edittitle'] . "', `description` = '" . $_GET['desc'] . "', `img` = '" . $img . "' WHERE `tbl_announcement`.`id` = '" . $_GET['id'] . "'";
+    $mysqli->query($sql);
+    unset($_SESSION["uploadimg"]);
+}
+
+if (isset($_GET["deleteannid"])) {
+    $query = "DELETE FROM tbl_announcement WHERE id = '" . $_GET["deleteannid"] . "'";
+    $mysqli->query($query);
+}
+if (isset($_GET["oldpass"])) {
+    $query = "SELECT * FROM tbl_account WHERE accountType = 1";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    $oldpass = $row["accountPassword"];
+    $oldpass1 = trim($_GET['oldpass']);
+    if ($oldpass != $oldpass1) {
+        echo "1";
+    } else {
+        $sql = "UPDATE `tbl_account` SET `accountPassword` = '" . $_GET['newpass'] . "' WHERE `tbl_account`.`id` = '1'";
+        $mysqli->query($sql);
+        echo $sql;
+    }
+}
+
 
 ?>
