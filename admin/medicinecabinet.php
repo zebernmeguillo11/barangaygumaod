@@ -19,7 +19,6 @@
         <h1 class="w-100 text-center">Medicine Cabinet</h1>
         <div class="container bg-info ">
         <div class="section1">
-        <button class="btn w-25">Print Request</button>
 
         <table class="w-100 text-center table">
             <thead class="thead-dark text-center">

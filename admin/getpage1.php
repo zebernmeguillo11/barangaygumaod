@@ -43,7 +43,7 @@ require_once("connection.php");
                 <?php echo $row1["Gender"]; ?>
             </td>
             <td >
-            <input id="<?php echo "bday".$row1["resident_id"];?>" type="date" value="<?php echo $row1["Birthdate"]; ?>" >
+            <input id="<?php echo "bday".$row1["resident_id"];?>" type="date" value="<?php echo $row1["Birthdate"]; ?>" style="display:none;">
                 <?php
                 $date = date_create($row1['Birthdate']);
                 echo date_format($date, "M d, Y"); ?>
