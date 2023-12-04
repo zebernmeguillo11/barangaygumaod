@@ -80,16 +80,29 @@ $_SESSION['limit1'] = 1;
         float: left;
     }
 
-    .feedback {
-        float: left;
-        color: green;
-        display: none;
+    .nav{
+        width: 4%;
+        padding: 0px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white;
     }
+
+    #logoutbtn{
+        transform: rotate(180deg);
+    }
+
+    .btnnav:hover{
+        background-color: rgb(150, 150, 150);
+    }
+
 </style>
 
 <body>
-    <div>
-        <img>
+    <div class="nav">
+        <button class="btn btnnav p-0" title="Go to Home"><img src="img/homepage.png"  class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" id="logoutbtn" title="Logout"><img src="img/logout.png"  class="img-thumbnail img-fluid"></button>
     </div>
     <div class="main">
         <h1 class="w-100 text-center">Resident Management</h1>
@@ -815,9 +828,10 @@ $_SESSION['limit1'] = 1;
 
                         }
                     }
-                };
-                xhttps.open("GET", "actionpage.php?deletehouseno=" + id);
+                    xhttps.open("GET", "actionpage.php?deletehouseno=" + id);
                 xhttps.send();
+                }
+               
 
             });
 
