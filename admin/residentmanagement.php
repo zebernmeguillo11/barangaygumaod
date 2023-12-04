@@ -9,7 +9,7 @@ $_SESSION['limit'] = 6;
 if (!isset($_SESSION['page1'])) {
     $_SESSION['page1'] = 1;
 }
-$_SESSION['limit1'] = 4;
+$_SESSION['limit1'] = 1;
 
 ?>
 
@@ -50,9 +50,9 @@ $_SESSION['limit1'] = 4;
         left: 50%;
         top: 50%;
         width: 400px;
-        height: 500px;
+        height: 650px;
         margin-left: -200px;
-        margin-top: -250px;
+        margin-top: -325px;
         background-color: white;
         box-shadow: 2px 10px 10px black;
         z-index: 10;
@@ -102,7 +102,8 @@ $_SESSION['limit1'] = 4;
                 <table class="w-100 text-center table table-striped table-hover table-light">
                     <thead class="thead-dark text-center">
                         <tr>
-                            <th><input type="checkbox" title="Select All" id="selectallcheckbox"></th>
+                            <th><input type="checkbox" title="Select All" id="selectallcheckbox"
+                                    onclick="checkall(this)"></th>
                             <th>Household No.</th>
                             <th>Family Name</th>
                             <th>Purok</th>
@@ -184,12 +185,13 @@ $_SESSION['limit1'] = 4;
                     <button class="btn bg-dark text-light w-25" onclick="editfamily()">Edit</button>
                 </div>
             </div>
-            <div class="section2 hidden">
+            <div class="section2 hidden" id="section2">
                 <table class="w-100 text-center table table-striped table-hover table-light">
                     <thead class="thead-dark text-center">
                         <tr>
-                        
-                            <th><input type="checkbox" title="Select All" id="selectallcheckbox2"></th>
+
+                            <th><input type="checkbox" title="Select All" id="selectallcheckbox3"
+                                    onclick="checkall1(this)"></th>
                             <th>Lastname</th>
                             <th>Firstname</th>
                             <th>Middlename</th>
@@ -201,8 +203,8 @@ $_SESSION['limit1'] = 4;
                     <?php
                     $sqlmax1 = "SELECT * FROM tbl_resident";
                     $resultmax1 = $mysqli->query($sqlmax1);
-
-                    $sql1 = "SELECT * FROM tbl_resident ORDER by Lastname";
+                    $offset1 = ($_SESSION['page1'] - 1) * $_SESSION['limit1'];
+                    $sql1 = "SELECT * FROM tbl_resident ORDER by Lastname LIMIT " . $offset1 . ", " . $_SESSION['limit1'];
                     $result1 = $mysqli->query($sql1);
                     $totalrows1 = mysqli_num_rows($resultmax1);
                     $result1 = $mysqli->query($sql1);
@@ -211,26 +213,27 @@ $_SESSION['limit1'] = 4;
                     while ($row1 = $result1->fetch_assoc()) {
                         ?>
                         <tr>
-                        <td><input type="checkbox" title="Select" class="rescheck"
-                                    value="<?php echo $row["resident_id"]; ?>"></td>
-                            <td>
+                            <td><input type="checkbox" title="Select" class="rescheck"
+                                    value="<?php echo $row1["resident_id"]; ?>"></td>
+                            <td id="<?php echo "lastname" . $row1["resident_id"]; ?>">
                                 <?php echo $row1["Lastname"]; ?>
                             </td>
-                            <td>
+                            <td id="<?php echo "firstname" . $row1["resident_id"]; ?>">
                                 <?php echo $row1["Firstname"]; ?>
                             </td>
-                            <td>
+                            <td id="<?php echo "middlename" . $row1["resident_id"]; ?>">
                                 <?php echo $row1["Middlename"]; ?>
                             </td>
-                            <td>
+                            <td id="<?php echo "gender" . $row1["resident_id"]; ?>">
                                 <?php echo $row1["Gender"]; ?>
                             </td>
                             <td>
+                            <input id="<?php echo "bday".$row1["resident_id"];?>" type="date" value="<?php echo $row1["Birthdate"]; ?>" style="display:none;">
                                 <?php
                                 $date = date_create($row1['Birthdate']);
                                 echo date_format($date, "M d, Y"); ?>
                             </td>
-                            <td>
+                            <td id="<?php echo "status" . $row1["resident_id"]; ?>">
                                 <?php echo $row1["m_status"]; ?>
                             </td>
                         </tr>
@@ -247,16 +250,16 @@ $_SESSION['limit1'] = 4;
                     <?php
                     $buttonnum1 = 1;
                     while ($buttonnum1 < $totalpage1) {
-                        if ($_SESSION['searchpage1'] == $buttonnum1) {
+                        if ($_SESSION['page1'] == $buttonnum1) {
                             ?>
-                            <button class="pagebutton btn btn-secondary" value="<?php echo htmlentities($buttonnum); ?>"
+                            <button class="pagebutton btn btn-secondary" value="<?php echo htmlentities($buttonnum1); ?>"
                                 onclick="setpage1(this.value)">
                                 <?php echo $buttonnum1; ?>
                             </button>
                             <?php
                         } else {
                             ?>
-                            <button class="pagebutton btn btn-primary" value="<?php echo htmlentities($buttonnum); ?>"
+                            <button class="pagebutton btn btn-primary" value="<?php echo htmlentities($buttonnum1); ?>"
                                 onclick="setpage1(this.value)">
                                 <?php echo $buttonnum1; ?>
                             </button>
@@ -278,9 +281,9 @@ $_SESSION['limit1'] = 4;
                 </div>
 
                 <div class="w-75 my-2">
-                    <button class="btn bg-dark text-light w-25">Add</button>
-                    <button class="btn bg-dark text-light w-25">Delete</button>
-                    <button class="btn bg-dark text-light w-25">Edit</button>
+                    <button class="btn bg-dark text-light w-25" onclick="showaddres()">Add</button>
+                    <button class="btn bg-dark text-light w-25" onclick="deleteres()">Delete</button>
+                    <button class="btn bg-dark text-light w-25" onclick="editres()">Edit</button>
                 </div>
             </div>
 
@@ -364,6 +367,155 @@ $_SESSION['limit1'] = 4;
         </div>
 
 
+        <div class="custommodal p-2" id="addtores">
+            <h5 class="w-50 p-3">Add Resident</h5>
+            <div class="w-25 p-2 " style="float:right">
+                <button class="closebtn w-50 py-1" onclick="closeaddresmodal()"><img src="img/close.png"
+                        class="img-thumbnail img-fluid"></button>
+            </div>
+            <div class="inputdiv container w-100">
+                <label for="addlastname" class="form-label">Lastname</label>
+                <input type="text" class="form-control w-100" id="addlastname" required>
+                <div class="invalid-feedback" id="addlastnamefed">
+                    Required!
+                </div>
+            </div>
+            <div class="inputdiv container w-100">
+                <label for="addfirstname" class="form-label">Firstname</label>
+                <input type="text" class="form-control w-100" id="addfirstname" required>
+                <div class="invalid-feedback" id="addfirstnamefeed">
+                    Required!
+                </div>
+            </div>
+            <div class="inputdiv container w-100">
+                <label for="addmiddlename" class="form-label">Middlename</label>
+                <input type="text" class="form-control w-100" id="addmiddlename" required>
+                <div class="invalid-feedback" id="addmiddlenamefeed">
+                    Required! Put Na if not applicable.
+                </div>
+            </div>
+            <div class="inputdiv container w-100 pt-0">
+                <label for="addmiddlename" class="form-label mb-0 pb-0">Gender</label>
+                <div class="form-check ml-2 my-0">
+                    <input class="form-check-input" type="radio" name="gender" id="malegen" value="M" checked>
+                    <label class="form-check-label" for="malegen">
+                        Male
+                    </label>
+                </div>
+
+                <div class="form-check ml-2 my-0">
+                    <input class="form-check-input" type="radio" name="gender" id="femalegen" value="F">
+                    <label class="form-check-label" for="femalegen">
+                        Female
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="inputdiv container w-100">
+                <label for="addbirthdate" class="form-label">Birthdate</label>
+                <input type="date" class="form-control w-100" id="addbirthdate" required>
+                <div class="invalid-feedback" id="addbirthdatefeed">
+                    Required!
+                </div>
+            </div>
+
+            <div class="inputdiv container w-100">
+                <label for="mstatus" class="form-label">Marital Status</label>
+                <select name="status" class="form-control" id="mstatus">
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widowed">Widowed</option>
+                </select>
+            </div>
+
+
+
+            <div class="w-100 text-center text-center" style="float:left;">
+                <button class="btn btn-dark w-25 my-4" onclick="inserttores()">Add</button>
+            </div>
+            <div class="feedback w-100 text-center" id="successfeedback3">
+                Successfully added!
+            </div>
+
+
+        </div>
+        <div class="custommodal p-2" id="editres">
+            <h5 class="w-50 p-3">Edit Resident</h5>
+            <div class="w-25 p-2 " style="float:right">
+                <button class="closebtn w-50 py-1" onclick="closeditresmodal()"><img src="img/close.png"
+                        class="img-thumbnail img-fluid"></button>
+            </div>
+            <div class="inputdiv container w-100">
+                <label for="editlast" class="form-label">Lastname</label>
+                <input type="text" class="form-control w-100" id="editlast" required>
+                <div class="invalid-feedback" id="editlastfeed">
+                    Required!
+                </div>
+            </div>
+            <div class="inputdiv container w-100">
+                <label for="editfirst" class="form-label">Firstname</label>
+                <input type="text" class="form-control w-100" id="editfirst" required>
+                <div class="invalid-feedback" id="editfirstfeed">
+                    Required!
+                </div>
+            </div>
+            <div class="inputdiv container w-100">
+                <label for="editmiddle" class="form-label">Middlename</label>
+                <input type="text" class="form-control w-100" id="editmiddle" required>
+                <div class="invalid-feedback" id="editmiddlefeed">
+                    Required! Put Na if not applicable.
+                </div>
+            </div>
+            <div class="inputdiv container w-100 pt-0">
+                <label class="form-label mb-0 pb-0">Gender</label>
+                <div class="form-check ml-2 my-0">
+                    <input class="form-check-input" type="radio" name="editgender" id="editgenradM" value="M">
+                    <label class="form-check-label" for="editgenradM">
+                        Male
+                    </label>
+                </div>
+
+                <div class="form-check ml-2 my-0">
+                    <input class="form-check-input" type="radio" name="editgender" id="editgenradF" value="F">
+                    <label class="form-check-label" for="femalegen">
+                        Female
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="inputdiv container w-100">
+                <label for="editbirth" class="form-label">Birthdate</label>
+                <input type="date" class="form-control w-100" id="editbirth" required>
+                <div class="invalid-feedback" id="editbirthfeed">
+                    Required!
+                </div>
+            </div>
+
+            <div class="inputdiv container w-100">
+                <label for="editstatus" class="form-label">Marital Status</label>
+                <select name="editstatus" class="form-control" id="editstatus">
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widowed">Widowed</option>
+                </select>
+            </div>
+
+
+
+            <div class="w-100 text-center text-center" style="float:left;">
+                <button class="btn btn-dark w-25 my-4" onclick="inserttores()">Update</button>
+            </div>
+            <div class="feedback w-100 text-center" id="successfeedback3">
+                Successfully updated!
+            </div>
+
+
+        </div>
+
+
+
 
 </body>
 <script src="../js/bootstrap.bundle.js"></script>
@@ -372,15 +524,78 @@ $_SESSION['limit1'] = 4;
 <script type="text/javascript" src="jquery.js"></script>
 
 <script>
-    function getpage(){
+    function checkall(e) {
+        $(':checkbox.famcheck').prop('checked', e.checked);
+    }
+    function checkall1(e) {
+        $(':checkbox.rescheck').prop('checked', e.checked);
+    }
+    function inserttores() {
+        var lastname = document.getElementById("addlastname").value;
+        var firstname = document.getElementById("addfirstname").value;
+        var middlename = document.getElementById("addmiddlename").value;
+        var gender = $('input[name="gender"]:checked').val();
+        var e = document.getElementById("mstatus");
+        var status = e.options[e.selectedIndex].value;
+        var bday = document.getElementById("addbirthdate").value;
+
+        if (lastname.trim() == "" || firstname.trim() == "" || middlename.trim() == "" || bday.trim() == "") {
+            if (lastname.trim() == "") {
+                $("#addlastnamefed").css('display', 'inline-block');
+            }
+            if (firstname.trim() == "") {
+                $("#addfirstnamefeed").css('display', 'inline-block');
+
+            }
+            if (middlename.trim() == "") {
+                $("#addfirstnamefeed").css('display', 'inline-block');
+
+            }
+            if (bday.trim() == "") {
+                $("#addbirthdatefeed").css('display', 'inline-block');
+
+            }
+        } else {
+            var xhttps = new XMLHttpRequest();
+            xhttps.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText.trim() == "1") {
+                        document.getElementById("addhousenofeed").innerHTML = "Duplicate entry.";
+                        alert("Duplicate entry!");
+
+                    } else {
+                        $("#successfeedback3").fadeIn(500).fadeOut(8000);
+                        $('#addlastname').val('');
+                        $('#addfirstname').val('');
+                        $('#addmiddlename').val('');
+
+                    }
+                }
+            };
+            xhttps.open("GET", "actionpage.php?addlast=" + lastname + "&addfirst=" + firstname + "&addmiddle=" + middlename + "&addgender=" + gender + "&addbday=" + bday + "&addmstatus=" + status);
+            xhttps.send();
+        }
+    }
+    function getpage() {
         var xhttps = new XMLHttpRequest();
-  		xhttps.onreadystatechange = function(){
-    		if (this.readyState == 4 && this.status == 200){
-    			document.getElementById("section1").innerHTML = this.responseText;
-	   			}
- 			};
-  			xhttps.open("GET","getpage.php");
-  			xhttps.send();
+        xhttps.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("section1").innerHTML = this.responseText;
+            }
+        };
+        xhttps.open("GET", "getpage.php");
+        xhttps.send();
+    }
+
+    function getpage1() {
+        var xhttps = new XMLHttpRequest();
+        xhttps.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("section2").innerHTML = this.responseText;
+            }
+        };
+        xhttps.open("GET", "getpage1.php");
+        xhttps.send();
     }
     function setpage(x) {
 
@@ -393,6 +608,19 @@ $_SESSION['limit1'] = 4;
         xhttps.open("GET", "actionpage.php?setpage=" + x);
         xhttps.send();
     }
+
+    function setpage1(x) {
+
+        var xhttps = new XMLHttpRequest();
+        xhttps.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                getpage1();
+            }
+        };
+        xhttps.open("GET", "actionpage.php?setpage1=" + x);
+        xhttps.send();
+    }
+
 
     function switchtores() {
         $(".section1").slideUp(1000);
@@ -409,11 +637,27 @@ $_SESSION['limit1'] = 4;
         $("#addtofam").slideDown(500);
 
     }
+    function showaddres() {
+        $("#addtores").slideDown(500);
+
+    }
 
     function closeaddfammodal() {
         $("#addtofam").slideUp(500);
 
     }
+
+    function closeaddresmodal() {
+        $("#addtores").slideUp(500);
+
+    }
+
+    function closeditresmodal() {
+        $("#editres").slideUp(500);
+
+    }
+
+
 
     function showeditmodal(id) {
         $("#editfam").slideDown(500);
@@ -423,6 +667,30 @@ $_SESSION['limit1'] = 4;
         document.getElementById("editfamilyname").value = name;
         document.getElementById("edithouse").value = houseno;
         $('#editpurok').val(purok);
+    }
+    function showreseditmodal(id) {
+        $("#editres").slideDown(500);
+        var lastname = document.getElementById("lastname" + id).innerHTML;
+        var firstname = document.getElementById("firstname" + id).innerHTML;
+        var middle = document.getElementById("middlename" + id).innerHTML;
+        var bday = document.getElementById("bday" + id).value;
+        var mstatus = document.getElementById("status" + id).innerHTML.trim();
+        var gender = document.getElementById("gender" + id).innerHTML.trim();
+        if (gender == "M") {
+            $("#editgenradM").prop("checked", true);
+
+        } else {
+            $("#editgenradF").prop("checked", true);
+        }
+
+        document.getElementById("editlast").value = lastname;
+        document.getElementById("editfirst").value = firstname;
+        document.getElementById("editmiddle").value = middle;
+        document.getElementById("editbirth").value = bday;
+        $('#editstatus').val(mstatus);
+
+
+
     }
 
     function closeeditfam() {
@@ -509,7 +777,25 @@ $_SESSION['limit1'] = 4;
         if (count != 1) {
             alert("Select only 1 to edit");
         } else {
-            showeditmodal(id);
+            showreseditmodal(id);
+        }
+
+    }
+    function editres() {
+        var count = 0;
+        var id = "";
+
+        $(".rescheck").each(function () {
+            if (this.checked) {
+                count++;
+                id = this.value;
+            }
+
+        });
+        if (count != 1) {
+            alert("Select only 1 to edit");
+        } else {
+            showreseditmodal(id);
         }
 
     }
@@ -539,11 +825,34 @@ $_SESSION['limit1'] = 4;
     }
 
 
+    function deleteres() {
+        var conf = confirm("Are you sure you want to delete this entries?");
+        if (conf) {
+            $(".rescheck").each(function () {
+                if (this.checked) {
+                    var id = this.value;
+                    var xhttps = new XMLHttpRequest();
+                    xhttps.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            getpage1();
+
+                        }
+                    }
+                };
+                xhttps.open("GET", "actionpage.php?deleteres=" + id);
+                xhttps.send();
+
+            });
+
+        }
+    }
+
+
+
     $(document).ready(function () {
 
-        $('#selectallcheckbox').click(function () {
-            $(':checkbox.famcheck').prop('checked', this.checked);
-        });
+
+
     });
 
 

@@ -5,7 +5,7 @@ require_once("connection.php");
 <table class="w-100 text-center table table-striped table-hover table-light">
     <thead class="thead-dark text-center">
         <tr>
-            <th><input type="checkbox" title="Select All" id="selectallcheckbox"></th>
+            <th><input type="checkbox" title="Select All" class="selectallcheckbox" onclick="checkall(this)"></th>
             <th>Household No.</th>
             <th>Family Name</th>
             <th>Purok</th>
