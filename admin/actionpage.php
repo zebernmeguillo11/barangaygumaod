@@ -67,6 +67,12 @@ if (isset($_GET["deletemed"])) {
     $mysqli->query($query);
 }
 
+if (isset($_GET["deleteofficial"])) {
+    $query = "DELETE FROM tbl_officials WHERE id = '" . $_GET["deleteofficial"] . "'";
+    $mysqli->query($query);
+    echo $query;
+}
+
 if (isset($_GET['medid']) || isset($_GET['editbrand'])) {
     $sql = "UPDATE `tbl_medicine` SET `brandname` = '" . $_GET['editbrand'] . "', `genericname` = '" . $_GET['genname'] . "', `quantity` = '" . $_GET["quantity"] . "', `unit` = '" . $_GET["unit"] . "' WHERE `tbl_medicine`.`medicine_id` = '" . $_GET['medid'] . "'";
     $mysqli->query($sql);
@@ -79,7 +85,7 @@ if (isset($_GET['addtitle']) && isset($_GET['desc'])) {
     if (isset($_SESSION['uploadimg'])) {
         $img = $_SESSION['uploadimg'];
     } else {
-        $img = 'sample.jpg';
+        $img = 'upload.png';
     }
     $sql = "INSERT INTO `tbl_announcement` (`id`, `title`, `description`, `date`, `img`) VALUES (DEFAULT, '" . $_GET['addtitle'] . "', '" . $_GET['desc'] . "', NOW(), '" . $img . "')";
     $mysqli->query($sql);
@@ -93,7 +99,7 @@ if (isset($_GET['id']) && isset($_GET['edittitle'])) {
     if (isset($_SESSION['editimg'])) {
         $img = $_SESSION['editimg'];
     } else {
-        $img = 'sample.jpg';
+        $img = 'upload.png';
     }
     $sql = "UPDATE `tbl_announcement` SET `title` = '" . $_GET['edittitle'] . "', `description` = '" . $_GET['desc'] . "', `img` = '" . $img . "' WHERE `tbl_announcement`.`id` = '" . $_GET['id'] . "'";
     $mysqli->query($sql);
@@ -115,9 +121,21 @@ if (isset($_GET["oldpass"])) {
     } else {
         $sql = "UPDATE `tbl_account` SET `accountPassword` = '" . $_GET['newpass'] . "' WHERE `tbl_account`.`id` = '1'";
         $mysqli->query($sql);
-        echo $sql;
     }
 }
 
+if(isset($_GET["resid"]) && isset($_GET["posid"])){
+    $img = "";
+    if (isset($_SESSION['officialimg'])) {
+        $img = $_SESSION['officialimg'];
+    } else {
+        $img = 'upload.png';
+    }
+    $sql="INSERT INTO `tbl_officials` (`id`, `position_id`, `resident_id`, `img`) VALUES (DEFAULT, '".$_GET["posid"]."', '".$_GET["resid"]."', '".$img."')";
+    $mysqli->query($sql);
+    unset($_SESSION["officialimg"]);
+
+    
+}
 
 ?>

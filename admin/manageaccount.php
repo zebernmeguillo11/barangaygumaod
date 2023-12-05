@@ -13,9 +13,26 @@
     .main {
         height: 100vh;
     }
+    .nav{
+        width: 4%;
+        padding: 0px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white;
+    }
+    #logoutbtn{
+        transform: rotate(180deg);
+    }
+
+
 </style>
 
 <body>
+<div class="nav">
+        <button class="btn btnnav p-0" title="Go to Home"  onClick="location.href='dashboard.php'"><img src="img/homepage.png"  class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"  class="img-thumbnail img-fluid"></button>
+    </div>
     <div class="container bg-light pt-5 main">
         <div class="mt-5 pt-4">
             <h2 class="text-center mt-5">Change Password</h2>
@@ -61,7 +78,12 @@
 <script type="text/javascript" src="jquery.js"></script>
 
 <script>
-
+    function logout(){
+        var conf =confirm("Logout?");
+        if(conf){
+            window.location.href = "logout.php";
+        }
+    }
     function enablenew() {
         var oldpass = document.getElementById("old").value;
         if (oldpass.length > 0) {
