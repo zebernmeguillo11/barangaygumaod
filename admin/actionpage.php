@@ -138,4 +138,14 @@ if(isset($_GET["resid"]) && isset($_GET["posid"])){
     
 }
 
+if(isset($_GET["famid"]) && isset($_GET["resid"])){
+    $sql = "INSERT INTO `tbl_familymember` (`id`, `houseNumber`, `resident_id`, `Position`) VALUES (DEFAULT, '".$_GET["famid"]."', '".$_GET["resid"]."', '".$_GET["pos"]."')";
+    $mysqli->query($sql);
+    echo $sql;
+}
+
+if(isset($_GET["deletemember"])){
+    $sql = "DELETE FROM tbl_familymember WHERE id = '".$_GET["deletemember"]."'";
+    $mysqli->query($sql);
+}
 ?>

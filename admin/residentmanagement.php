@@ -26,6 +26,9 @@ $_SESSION['limit1'] = 1;
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
 </head>
 <style>
+    .familydata:hover{
+        cursor: pointer;
+    }
     .mainsection {
         background-color: #FFC5C5;
     }
@@ -109,7 +112,7 @@ $_SESSION['limit1'] = 1;
         <div class="container mainsection ">
             <button class="btn bg-dark text-light my-2" onClick="switchtores()">Switch to Resident View</button>
             <button class="btn bg-dark text-light my-2" onClick="switchtofam()">Switch to Family View</button>
-            <label for="search" class="ml-4 w-50 my-2 text-center" style="float: right;">Search:<input type="text"
+            <label for="search" class="ml-4 w-50 my-2 text-center" style="float: right;">Search:<input type="text" placeholder="Enter Lastname"
                     name="search" id="search"></label>
             <div class="section1" id="section1">
                 <table class="w-100 text-center table table-striped table-hover table-light">
@@ -140,13 +143,13 @@ $_SESSION['limit1'] = 1;
                             <td><input type="checkbox" title="Select" class="famcheck"
                                     value="<?php echo $row["houseNumber"]; ?>"></td>
 
-                            <td id="houseno-<?php echo $row['houseNumber']; ?>">
+                            <td id="houseno-<?php echo $row['houseNumber']; ?>" class="familydata" onclick="showfamily(this.id)">
                                 <?php echo $row["houseNumber"]; ?>
                             </td>
-                            <td id="housename-<?php echo $row['houseNumber']; ?>">
+                            <td id="housename-<?php echo $row['houseNumber']; ?>" >
                                 <?php echo $row["householdName"]; ?>
                             </td>
-                            <td id="purok-<?php echo $row['houseNumber']; ?>">
+                            <td id="purok-<?php echo $row['houseNumber']; ?>" >
                                 <?php echo $row["purok"]; ?>
                             </td>
                         </tr>
@@ -537,6 +540,10 @@ $_SESSION['limit1'] = 1;
 <script type="text/javascript" src="jquery.js"></script>
 
 <script>
+    function showfamily(id){
+        var houseno =document.getElementById(id).innerHTML.trim();
+        window.location.href = "showfamily.php?houseno=" + houseno;
+    }
     function logout(){
         var conf =confirm("Logout?");
         if(conf){
@@ -859,9 +866,10 @@ $_SESSION['limit1'] = 1;
 
                         }
                     }
-                };
-                xhttps.open("GET", "actionpage.php?deleteres=" + id);
+                    xhttps.open("GET", "actionpage.php?deleteres=" + id);
                 xhttps.send();
+                };
+
 
             });
 
