@@ -22,6 +22,10 @@ $row = $result->fetch_assoc();
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
 </head>
 <style>
+    #section1{
+        background-color: #00A1A1;
+        box-shadow: 2px 2px 2px black;
+    }
     #dropdown {
         background-color: rgb(220, 220, 220);
         height: 100px;
@@ -51,6 +55,10 @@ $row = $result->fetch_assoc();
         box-shadow: 2px 10px 10px black;
         z-index: 10;
         display: none;
+
+    }
+    body {
+        background-color: #FFC5C5;
 
     }
 
@@ -103,11 +111,11 @@ $row = $result->fetch_assoc();
         <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"
                 class="img-thumbnail img-fluid"></button>
     </div>
-    <div class="main">
+    <div class="main" >
         <h2 class="w-100 text-center">
             <?php echo $row['householdName'] . " Family"; ?>
         </h2>
-        <div class="container" id="section1">
+        <div class="container rounded p-4 w-100" id="section1">
 
             <table class="w-100 text-center table table-striped table-hover table-light">
                 <thead class="thead-dark text-center">
@@ -151,8 +159,8 @@ $row = $result->fetch_assoc();
                 ?>
             </table>
             <div class="w-75">
-                <button class="w-25 btn btn-info" onclick="showaddmember()">Add</button>
-                <button class="w-25 btn btn-info" onclick="deleteres()">Delete</button>
+                <button class="w-25 btn btn-dark" onclick="showaddmember()">Add</button>
+                <button class="w-25 btn btn-dark" onclick="deleteres()">Delete</button>
             </div>
         </div>
 

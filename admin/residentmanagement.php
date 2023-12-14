@@ -26,11 +26,24 @@ $_SESSION['limit1'] = 1;
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
 </head>
 <style>
+    .feedback{
+        float: left;
+        display: none;
+        color: red;
+    }
+     body {
+        background-color: #FFC5C5;
+
+    }
+
+
     .familydata:hover{
         cursor: pointer;
     }
     .mainsection {
-        background-color: #FFC5C5;
+        background-color: #00A1A1;
+        box-shadow: 2px 2px 2px black;
+        
     }
 
     .main {
@@ -60,6 +73,7 @@ $_SESSION['limit1'] = 1;
         box-shadow: 2px 10px 10px black;
         z-index: 10;
         display: none;
+        text-overflow: scroll;
 
     }
 
@@ -109,11 +123,11 @@ $_SESSION['limit1'] = 1;
     </div>
     <div class="main">
         <h1 class="w-100 text-center">Resident Management</h1>
-        <div class="container mainsection ">
+        <div class="container mainsection p-4 rounded">
             <button class="btn bg-dark text-light my-2" onClick="switchtores()">Switch to Resident View</button>
             <button class="btn bg-dark text-light my-2" onClick="switchtofam()">Switch to Family View</button>
-            <label for="search" class="ml-4 w-50 my-2 text-center" style="float: right;">Search:<input type="text" placeholder="Enter Lastname"
-                    name="search" id="search"></label>
+            <label for="search" class=" w-50 p-1 my-2 text-center" >Search:<input type="text" placeholder="Enter Lastname"
+                    name="search" id="search" onkeyup="searchfamily(this.value)"></label>
             <div class="section1" id="section1">
                 <table class="w-100 text-center table table-striped table-hover table-light">
                     <thead class="thead-dark text-center">
@@ -540,6 +554,24 @@ $_SESSION['limit1'] = 1;
 <script type="text/javascript" src="jquery.js"></script>
 
 <script>
+    function searchfamily(x){
+        if(x.trim()!=""){
+            if(x.trim().length > 1){
+
+        var xhttps = new XMLHttpRequest();
+        xhttps.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("section1").innerHTML = this.responseText;
+            }
+        };
+        xhttps.open("GET", "searchfamilypage.php?searchkey=" + x);
+        xhttps.send();
+    }    
+
+        }else{
+            getpage();
+        }
+    }
     function showfamily(id){
         var houseno =document.getElementById(id).innerHTML.trim();
         window.location.href = "showfamily.php?houseno=" + houseno;
@@ -751,6 +783,8 @@ $_SESSION['limit1'] = 1;
                         $("#successfeedback").fadeIn(500).fadeOut(8000);
                         $('#addfamilyname').val('');
                         $('#addhouseno').val('');
+                    getpage();
+
 
 
                     }
@@ -780,8 +814,8 @@ $_SESSION['limit1'] = 1;
             var xhttps = new XMLHttpRequest();
             xhttps.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText);
                     $("#successfeedback2").fadeIn(500).fadeOut(8000);
+                    getpage();
 
                 }
             };
@@ -838,7 +872,7 @@ $_SESSION['limit1'] = 1;
                     var xhttps = new XMLHttpRequest();
                     xhttps.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
-                            location.reload();
+                            getpage();
 
                         }
                     }

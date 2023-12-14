@@ -15,6 +15,7 @@ require_once("connection.php");
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
 </head>
 <style>
+    
     .custommodal {
         position: fixed;
         left: 50%;
@@ -72,6 +73,15 @@ require_once("connection.php");
     .btnnav:hover {
         background-color: rgb(150, 150, 150);
     }
+    #section1{
+        background-color: #00A1A1;
+        box-shadow: 2px 2px 2px black;
+    }
+    body {
+        background-color: #FFC5C5;
+
+    }
+
 </style>
 
 <body>
@@ -84,7 +94,7 @@ require_once("connection.php");
 
     <div class="main">
         <h1 class="w-100 text-center">Medicine Cabinet</h1>
-        <div class="container bg-info ">
+        <div class="container ">
             <div class="section1 p-4" id="section1">
 
                 <table class="w-100 text-center table table-light table-striped">
@@ -130,9 +140,9 @@ require_once("connection.php");
 
                 </table>
                 <div class="w-75">
-                    <button class="btn w-25" onclick="showaddmed()">Add</button>
-                    <button class="btn w-25" onclick="deletemed()">Delete</button>
-                    <button class="btn w-25" onclick="editmed()">Edit</button>
+                    <button class="btn btn-dark w-25" onclick="showaddmed()">Add</button>
+                    <button class="btn btn-dark w-25" onclick="deletemed()">Delete</button>
+                    <button class="btn btn-dark w-25" onclick="editmed()">Edit</button>
                 </div>
 
             </div>
