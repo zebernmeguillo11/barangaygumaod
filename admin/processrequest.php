@@ -246,6 +246,108 @@ if ($row["document_type"] == "3") {
 
 
                             <?php
+        } else if ($row["document_type"] == "2") {
+
+            $durationofstay = "";
+            $reasonofstay = "";
+            $bplace = "";
+            $spouse="";
+            $parents = "";
+            $bmark="";
+            $purposebrgyclearance = "";
+            $sql = "SELECT * FROM tbl_doctype2 WHERE request_id = '".$_GET['id']."'";
+            $result = $mysqli->query($sql);
+            if (mysqli_num_rows($result) == 1){
+                $row = $result->fetch_assoc();
+            $durationofstay = $row["time_of_stay"];
+            $reasonofstay = $row["reason"];
+            $bplace = $row["bplace"];
+            $spouse = $row["spouse"];
+            $parents = $row["parents"];
+            $bmark = $row["bmark"];
+            $purposebrgyclearance = $row["purpose"];
+
+
+
+            }
+            ?>
+                                    <div class="section1 p-4">
+                                        <h5>Barangay Clearance</h5>
+                                        <div class="row">
+                                            <div class="col p-2 border border-dark rounded">
+                                                <div class="inputdiv container">
+                                                    <label for="durationofstay" class="form-label">Duration of stay</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $durationofstay;?>" id="durationofstay" required>
+                                                    <div class="invalid-feedback" id="durationofstayfeed">
+                                                        Required!
+                                                    </div>
+                                                </div>
+                                                <div class="inputdiv container">
+                                                    <label for="reasonofstay" class="form-label">Reason for stay</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $reasonofstay;?>" id="reasonofstay" required>
+                                                    <div class="invalid-feedback" id="reasonofstayfeed">
+                                                        Required!
+                                                    </div>
+
+                                                </div>
+                                                <div class="inputdiv container">
+                                                    <label for="birthplace" class="form-label">Birthplace</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $bplace;?>" id="birthplace" required>
+                                                    <div class="invalid-feedback" id="birthplacefeed">
+                                                        Required!
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="inputdiv container">
+                                                    <label for="spouse" class="form-label">Spouse</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $spouse;?>" id="spouse" required>
+                                                    <div class="invalid-feedback" id="spousefeed">
+                                                        Required!
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col p-2 border border-dark rounded">
+                                                <div class="inputdiv container">
+                                                    <label for="parents" class="form-label">Parents</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $parents;?>" id="parents" required>
+                                                    <div class="invalid-feedback" id="parentsfeed">
+                                                        Required!
+                                                    </div>
+
+                                                </div>
+                                                <div class="inputdiv container">
+                                                    <label for="birthmark" class="form-label">Birthmark</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $bmark;?>" id="birthmark" required>
+                                                    <div class="invalid-feedback" id="birthmarkfeed">
+                                                        Required!
+                                                    </div>
+
+                                                </div>
+                                                <div class="inputdiv container">
+                                                    <label for="purposeofclearance" class="form-label">Purpose</label>
+                                                    <input type="text" class="form-control w-100" value = "<?php echo $purposebrgyclearance;?>" id="purposeofclearance" required>
+                                                    <div class="invalid-feedback" id="purposeofclearancefeed">
+                                                        Required!
+                                                    </div>
+                                                    <div class="col-12 text-right mt-2">
+                                                        <button class="btn btn-dark" value="<?php echo $_GET["id"]; ?>"
+                                                            onclick="proceedbarangayclearance(this.value)">Procceed>></button>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                            <?php
         }
         ?>
 
@@ -257,6 +359,29 @@ if ($row["document_type"] == "3") {
 <script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
 <script>
+
+    function proceedbarangayclearance(id){
+        var durationofstay = document.getElementById("durationofstay").value;
+        var reasonofstay = document.getElementById("reasonofstay").value;
+        var birthplace = document.getElementById("birthplace").value;
+        var spouse = document.getElementById("spouse").value;
+        var parents = document.getElementById("parents").value;
+        var birthmark = document.getElementById("birthmark").value;
+        var purposeofclearance = document.getElementById("purposeofclearance").value;
+        var xhttps = new XMLHttpRequest();
+            xhttps.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = "printbaragayclearance.php?id=" + id;
+                }
+            };
+            xhttps.open("GET", "actionpage1.php?doctype=2&id=" + id + "&durationofstay=" + durationofstay + "&reasonofstay=" + reasonofstay + 
+            "&birthplace=" + birthplace + "&spouse=" + spouse + "&parents=" + parents + "&birthmark=" + birthmark + "&purpose=" + purposeofclearance);
+            xhttps.send();
+
+        
+
+        
+    }
     function proceedresidency(id) {
         var purpose = document.getElementById("purposeofdoc").value;
         if (purpose.trim() == "") {
