@@ -203,6 +203,9 @@ if ($row["document_type"] == "3") {
 
                     <?php
         } else if ($row["document_type"] == "4") {
+
+            $sql1 = "SELECT * FROM tbl_doctype4 WHERE request_id ='" . $_GET['id'] . "'";
+            $result1 = $mysqli->query($sql1);
             ?>
                         <div class="section1 p-4">
                             <h5>Certificate of Residency</h5>
@@ -212,26 +215,41 @@ if ($row["document_type"] == "3") {
                                 <div class="col p-2 border border-dark rounded">
                                     <div class="inputdiv container">
                                         <label for="purposeofdoc" class="form-label">Purpose of Document</label>
-                                        <input type="text" class="form-control w-100" id="purposeofdoc" required>
+                                        <?php
+                                        if (mysqli_num_rows($result1) == 1) {
+                                            $row1 = $result1->fetch_assoc();
+                                            ?>
+                                            <input type="text" class="form-control w-100" id="purposeofdoc"
+                                                value="<?php echo $row1["purpose"]; ?>" required>
+
+
+                                        <?php
+                                        } else {
+                                            ?>
+                                            <input type="text" class="form-control w-100" id="purposeofdoc" required>
+                                        <?php
+                                        }
+
+                                        ?>
                                         <div class="invalid-feedback" id="purposeofdocfeed">
                                             Required!
                                         </div>
 
                                     </div>
-                                   
-                                <div class="col-12 text-right mt-2">
-                                    <button class="btn btn-dark" value="<?php echo $_GET["id"]; ?>"
-                                        onclick="proceedresidency(this.value)">Procceed>></button>
+
+                                    <div class="col-12 text-right mt-2">
+                                        <button class="btn btn-dark" value="<?php echo $_GET["id"]; ?>"
+                                            onclick="proceedresidency(this.value)">Procceed>></button>
+                                    </div>
                                 </div>
-                            </div>
 
 
 
-                        <?php
+                            <?php
         }
         ?>
 
-                </div>
+                    </div>
 
 </body>
 <script src="../js/bootstrap.bundle.js"></script>
@@ -239,6 +257,25 @@ if ($row["document_type"] == "3") {
 <script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
 <script>
+    function proceedresidency(id) {
+        var purpose = document.getElementById("purposeofdoc").value;
+        if (purpose.trim() == "") {
+            $("#purposeofdocfeed").css("display", "inline-block");
+
+        } else {
+            var xhttps = new XMLHttpRequest();
+            xhttps.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = "printresidency.php?id=" + id + "&purpose=" + purpose;
+                }
+            };
+            xhttps.open("GET", "actionpage1.php?doctype=4&id=" + id + "&purpose=" + purpose);
+            xhttps.send();
+
+
+        }
+
+    }
     function procceedanimaltransport(id) {
         var lastname = document.getElementById("buyerlastname").value;
         var firstname = document.getElementById("buyerfirstname").value;
