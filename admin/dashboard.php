@@ -101,7 +101,7 @@
         <div class="col-4 my-2 ">
             <div class="container my-4 p-2 section" onClick="location.href='interactivemap.php'">
                 <h6>Interactive Map</h6>
-                <img src="img/map.png" class="img-thumbnail img-fluid">
+                <img src="img/map1.png" class="img-thumbnail img-fluid">
 
 
             </div>
