@@ -4,12 +4,12 @@ require_once("connection.php");
 if (!isset($_SESSION['page'])) {
     $_SESSION['page'] = 1;
 }
-$_SESSION['limit'] = 6;
+$_SESSION['limit'] = 30;
 
 if (!isset($_SESSION['page1'])) {
     $_SESSION['page1'] = 1;
 }
-$_SESSION['limit1'] = 1;
+$_SESSION['limit1'] = 30;
 
 ?>
 
@@ -131,12 +131,14 @@ $_SESSION['limit1'] = 1;
             <div class="section1" id="section1">
                 <table class="w-100 text-center table table-striped table-hover table-light">
                     <thead class="thead-dark text-center">
-                        <tr>
-                            <th><input type="checkbox" title="Select All" id="selectallcheckbox"
+                        <tr class="row">
+                            <th class="col-1"><input type="checkbox" title="Select All" id="selectallcheckbox"
                                     onclick="checkall(this)"></th>
-                            <th>Household No.</th>
-                            <th>Family Name</th>
-                            <th>Purok</th>
+                            <th class="col-2">Household No.</th>
+                            <th class="col-6">Family Name</th>
+                            <th class="col-1">Purok</th>
+                            <th class="col-2">No. of Members</th>
+
                         </tr>
                     </thead>
                     <?php
@@ -153,18 +155,25 @@ $_SESSION['limit1'] = 1;
 
                     while ($row = $result->fetch_assoc()) {
                         ?>
-                        <tr>
-                            <td><input type="checkbox" title="Select" class="famcheck"
+                        <tr class="row">
+                            <td  class="col-1"><input type="checkbox" title="Select" class="famcheck"
                                     value="<?php echo $row["houseNumber"]; ?>"></td>
 
-                            <td id="houseno-<?php echo $row['houseNumber']; ?>" class="familydata" onclick="showfamily(this.id)">
+                            <td  class="col-2" id="houseno-<?php echo $row['houseNumber']; ?>" class="familydata" onclick="showfamily(this.id)">
                                 <?php echo $row["houseNumber"]; ?>
                             </td>
-                            <td id="housename-<?php echo $row['houseNumber']; ?>" >
+                            <td class="col-6" id="housename-<?php echo $row['houseNumber']; ?>" >
                                 <?php echo $row["householdName"]; ?>
                             </td>
-                            <td id="purok-<?php echo $row['houseNumber']; ?>" >
+                            <td class="col-1" id="purok-<?php echo $row['houseNumber']; ?>" >
                                 <?php echo $row["purok"]; ?>
+                            </td>
+                            <td class="col-2" id="member-<?php echo $row['houseNumber']; ?>" >
+                                <?php 
+                                $query = "SELECT * FROM tbl_familymember WHERE houseNumber = '".$row['houseNumber']."'";
+                                $resultnew = $mysqli->query($query);
+                                echo mysqli_num_rows($resultnew); 
+                                ?>
                             </td>
                         </tr>
                         <?php
@@ -838,7 +847,7 @@ $_SESSION['limit1'] = 1;
         if (count != 1) {
             alert("Select only 1 to edit");
         } else {
-            showreseditmodal(id);
+            showeditmodal(id);
         }
 
     }

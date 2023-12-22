@@ -48,6 +48,7 @@ include_once("connection.php");
         box-shadow: 2px 10px 10px black;
         z-index: 10;
         display: none;
+        overflow-y: scroll;
 
     }
 
@@ -81,6 +82,10 @@ include_once("connection.php");
     .dropdownlist:hover {
         background-color: white;
     }
+
+    td img{
+        margin-left: 7%;
+    }
 </style>
 
 <body>
@@ -96,13 +101,13 @@ include_once("connection.php");
             <div class="col-2"></div>
             <div class="col">
                 <div id="section1">
-                    <table class="w-100 text-center table table-light table-striped">
-                        <thead class="thead-dark text-center">
+                    <table class="w-100 table table-light table-striped">
+                        <thead class="thead-dark ">
                             <tr>
                                 <th><input type="checkbox" title="Select All" id="selectallcheckbox"
                                         onclick="checkall(this)"></th>
-                                <th>Position</th>
-                                <th>Name</th>
+                                <th class="text-center">Position</th>
+                                <th class="text-center">Name</th>
                             </tr>
                         </thead>
 

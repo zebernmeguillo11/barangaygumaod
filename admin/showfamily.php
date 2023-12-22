@@ -178,8 +178,8 @@ $row = $result->fetch_assoc();
             <select name="relation" class="form-control" id="relationship">
                 <option value="Grandfather">Grandfather</option>
                 <option value="Grandmother">Grandmother</option>
-                <option value="Father">Father</option>
-                <option value="Mother">Mother</option>
+                <option value="Father">Family Head</option>
+                <option value="Mother">Spouse</option>
                 <option value="Child">Child</option>
                 <option value="Other">Other</option>
 
@@ -320,6 +320,8 @@ $row = $result->fetch_assoc();
                     var xhttps = new XMLHttpRequest();
                     xhttps.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
+                    updatetable();
+
 
                         }
                     }

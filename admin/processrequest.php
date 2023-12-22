@@ -8,6 +8,11 @@ if ($row["document_type"] == "3") {
     header('Location:indigencycertificate.php?id=' . $_GET['id']);
 }
 
+if ($row["document_type"] == "7") {
+    header('Location:goodmoral.php?id=' . $_GET['id']);
+}
+
+
 ?>
 
 <!DOCTYPE html>

@@ -18,7 +18,7 @@ if (isset($_GET['doctype']) && $_GET['doctype'] == "4") {
     $sql = "SELECT * FROM tbl_doctype4 WHERE request_id = '" . $_GET["id"] . "'";
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
-        $update = "UPDATE `tbl_doctype4` SET `purpose` = '" . $_GET['purpose'] . "' WHERE  request_id = " . $_GET['id'] . "";
+        $update = "UPDATE `tbl_doctype4` SET `purpose` = '" . $_GET['purpose'] . "' WHERE  request_id = '" . $_GET['id'] . "'";
         $mysqli->query($update);
     } else {
         $insert = "INSERT INTO `tbl_doctype4` (`id`, `request_id`, `purpose`) VALUES (NULL, '" . $_GET['id'] . "', '" . $_GET["purpose"] . "')";
@@ -37,5 +37,18 @@ if (isset($_GET['doctype']) && $_GET['doctype'] == "2") {
         $mysqli->query($insert);
     }
 }
+
+if (isset($_GET['doctype']) && $_GET['doctype'] == "7") {
+    $sql = "SELECT * FROM tbl_doctype7 WHERE request_id = '" . $_GET["id"] . "'";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        $update = "UPDATE `tbl_doctype7` SET `purpose` = '" . $_GET['purpose'] . "' WHERE  request_id = '" . $_GET['id'] . "'";
+        $mysqli->query($update);
+    } else {
+        $insert = "INSERT INTO `tbl_doctype7` (`id`, `request_id`, `purpose`) VALUES (NULL, '".$_GET["id"]."', '".$_GET["purpose"]."')";
+        $mysqli->query($insert);
+    }
+}
+
 
 ?>

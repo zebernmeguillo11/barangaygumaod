@@ -163,7 +163,7 @@ $pdf->Cell(210, 15, strtoupper($year." years old"), 0, 0, 'L');
 $pdf->Ln();
 
 $pdf->SetXY(75, 120);
-$pdf->Cell(210, 15, $poruk."GUMAOD CLAVERIA", 0, 0, 'L');
+$pdf->Cell(210, 15, $poruk.", GUMAOD, CLAVERIA", 0, 0, 'L');
 $pdf->Ln();
 
 $query = "SELECT * FROM tbl_doctype2 WHERE request_id = '".$_GET['id']."'";

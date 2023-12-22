@@ -1,11 +1,14 @@
-var c = document.getElementById('myCanvas'),
-    elemLeft = c.offsetLeft + c.clientLeft,
-    elemTop = c.offsetTop + c.clientTop,
-    context = c.getContext('2d'),
-    elements = [];
+var c = document.getElementById('myCanvas');
 
-c.addEventListener('click', function() {
+c.addEventListener('mousedown', function (e) {
+    $(".houseselector").each(function () {
+        if (this.checked) {
+            
+        }
+    });
+
+}, false);
 
 
 
- }, false);
+

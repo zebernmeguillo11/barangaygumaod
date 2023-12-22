@@ -38,7 +38,7 @@ include_once("connection.php");
                 ?>
             </table>
             <div class="w-75">
-                <button class="w-25 btn btn-info" onclick="showaddmember()">Add</button>
-                <button class="w-25 btn btn-info" onclick="deleteres()">Delete</button>
+                <button class="w-25 btn " onclick="showaddmember()">Add</button>
+                <button class="w-25 btn " onclick="deleteres()">Delete</button>
             </div>
         </div>
