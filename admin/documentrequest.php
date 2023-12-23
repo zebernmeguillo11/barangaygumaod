@@ -151,6 +151,7 @@ include_once("connection.php");
                 <table class="w-100 table">
                     <thead class="thead-dark text-center">
                         <tr>
+                        <th>ID</th>
                             <th>Requestor's Name</th>
                             <th>Document Requested</th>
                             <th>Date Requested</th>
@@ -164,6 +165,10 @@ include_once("connection.php");
 
                         ?>
                         <tr class="text-center">
+                            <td> <?php
+                            echo $row["id"];
+                            
+                            ?></td>
                             <td>
                                 <?php
                                 $res = "SELECT * FROM tbl_resident WHERE resident_id = '" . $row['resident_id'] . "'";

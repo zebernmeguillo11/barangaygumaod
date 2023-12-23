@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Process Request-Good Moral</title>
+    <title>Process Request - Wood Cutting Permit</title>
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
@@ -53,16 +53,32 @@
     <div class="container">
         <div class="section1 p-4">
             <div class="inputdiv container">
-                <b> <label for="purposeofdoc" class="form-label">This Good Moral Certificate is a Requirement
-                        For</label></b>
-                <input type="text" class="form-control w-100" id="purposeofdoc" required>
-                <div class="invalid-feedback" id="purposeofdocfeed">
+                <b> <label for="treename" class="form-label">Tree Variety
+                    </label></b>
+                <input type="text" class="form-control w-100" id="treename" required>
+                <div class="invalid-feedback" id="treenamefeed">
+                    Required!
+                </div>
+            </div>
+            <div class="inputdiv container">
+                <b> <label for="treelocation" class="form-label">Tree Location
+                       </label></b>
+                <input type="text" class="form-control w-100" id="treelocation" required>
+                <div class="invalid-feedback" id="treelocationfeed">
+                    Required!
+                </div>
+            </div>
+            <div class="inputdiv container">
+                <b> <label for="purpose" class="form-label">Purpose
+                        </label></b>
+                <input type="text" class="form-control w-100" id="purpose" required>
+                <div class="invalid-feedback" id="purposefeed">
                     Required!
                 </div>
             </div>
             <div class="col-12 text-right mt-2">
                 <button class="btn btn-dark" value="<?php echo $_GET["id"]; ?>"
-                    onclick="proceedgoodmoral(this.value)">Procceed>></button>
+                    onclick="proceedwoodcutting(this.value)">Procceed>></button>
             </div>
         </div>
     </div>
@@ -76,19 +92,31 @@
 
 <script>
 
-    function proceedgoodmoral(id) {
-        var purpose = document.getElementById("purposeofdoc").value;
-        if (purpose.trim() == "") {
-            $("#purposeofdocfeed").css("display", "inline-block");
+    function proceedwoodcutting(id) {
+        var treename = document.getElementById("treename").value;
+        var treelocation = document.getElementById("treelocation").value;
+        var purpose = document.getElementById("purpose").value;
+        if (treename.trim() == "" || treelocation == "" || purpose == "") {
+            if (purpose.trim() == "") {
+                $("#purposefeed").css("display", "inline-block");
+            }
+            if (treename.trim() == "") {
+                $("#treenamefeed").css("display", "inline-block");
 
-        } else {
+            }
+            if (treelocation.trim() == "") {
+                $("#treelocationfeed").css("display", "inline-block");
+
+            }
+        }
+        else {
             var xhttps = new XMLHttpRequest();
             xhttps.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    window.location.href = "goodmoralcertificate.php?id=" + id + "&purpose=" + purpose;
+                    window.location.href = "printwoodcutpermit.php?id=" + id + "&purpose=" + purpose + "&variety=" + treename + "&location=" + treelocation;
                 }
             };
-            xhttps.open("GET", "actionpage1.php?doctype=7&id=" + id + "&purpose=" + purpose);
+            xhttps.open("GET", "actionpage1.php?doctype=8&id=" + id + "&purpose=" + purpose + "&variety=" + treename + "&location=" + treelocation);
             xhttps.send();
         }
     }

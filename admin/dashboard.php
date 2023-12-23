@@ -29,6 +29,18 @@
 
 
     }
+
+    .closebtn {
+        border: none;
+        background-color: white;
+        float: right;
+
+    }
+
+    .closebtn:hover {
+        cursor: pointer;
+        background-color: rgb(100, 100, 100);
+    }
 </style>
 
 <body>
@@ -90,9 +102,9 @@
 
         </div>
         <div class="col-4 my-2 ">
-            <div class="container my-4 p-2 section" onClick="location.href='treasurer.php'">
-                <h6>Treasurer's Page</h6>
-                <img src="img/Treasurer.png" class="img-thumbnail img-fluid">
+            <div class="container my-4 p-2 section" onClick="location.href='gallery.php'">
+                <h6>Gallery</h6>
+                <img src="img/gallery.png" class="img-thumbnail img-fluid">
 
 
             </div>

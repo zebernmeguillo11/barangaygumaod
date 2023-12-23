@@ -239,7 +239,7 @@ include_once("connection.php");
     }
 
     function chooseres(e) {
-        var fullname = document.getElementById("fullname" + e).innerHTML;
+        var fullname = document.getElementById("fullname1" + e).innerHTML;
         document.getElementById("residentID").value = fullname.trim();
         document.getElementById("residentidhidden").value = e;
 

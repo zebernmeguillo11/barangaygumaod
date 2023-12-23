@@ -11,7 +11,9 @@ if ($row["document_type"] == "3") {
 if ($row["document_type"] == "7") {
     header('Location:goodmoral.php?id=' . $_GET['id']);
 }
-
+if ($row["document_type"] == "8") {
+    header('Location:woodcutting.php?id=' . $_GET['id']);
+}
 
 ?>
 

@@ -51,4 +51,17 @@ if (isset($_GET['doctype']) && $_GET['doctype'] == "7") {
 }
 
 
+if (isset($_GET['doctype']) && $_GET['doctype'] == "8") {
+    $sql = "SELECT * FROM tbl_doctype8 WHERE request_id = '" . $_GET["id"] . "'";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        $update = "UPDATE `tbl_doctype8` SET `variety` = '".$_GET["variety"]."', `location` = '".$_GET["location"]."', `purpose` = '".$_GET["purpose"]."' WHERE request_id = '".$_GET['id']."'";
+        $mysqli->query($update);
+    } else {
+        $insert = "INSERT INTO `tbl_doctype8` (`id`, `request_id`, `variety`, `location`, `purpose`) VALUES (NULL, '".$_GET["id"]."', '".$_GET["variety"]."', '".$_GET["location"]."', '".$_GET["purpose"]."')";
+        $mysqli->query($insert);
+    }
+}
+
+
 ?>
