@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once("connection.php");
+if (!isset($_SESSION["auth"])) {
+    header("location: index.php");
+}
 
 ?>
 
@@ -25,70 +28,18 @@ include_once("connection.php");
         background-color: #FFC5C5;
 
     }
-
-    .zoneoptions button {
-        font-size: 12px;
-        width: 100%;
-        margin-top: 2px;
-    }
-
-    .zoneoptions {
-        display: none;
-    }
-
-    .zoneoptions button:hover {
-        background-color: rgb(80, 100, 80);
-        color: white;
-    }
-
-    .zonenav {
-        margin: 15px auto;
-        box-shadow: 0px 0px 10px black;
-        padding: 10px 0px;
-        background-color: rgb(50, 120, 50);
-        color: white;
-        text-align: center;
-
-    }
+    .marker-desc{
+    width: 300px;
+    min-height: 40px;
+    text-align: justify;
+    color: #333;
+    font-size: 14px;
+  }
 
 
 
-    .zonenav:hover {
-        cursor: pointer;
-        background-color: white;
-        color: black;
-        transition: 0.7s;
-    }
-
-    .puroknavigator {
-        position: fixed;
-        right: 4%;
-        top: 7%;
-        width: 8%;
-        height: 90vh;
-    }
-
-    .householder {
-        overflow-y: scroll;
-        height: 90vh;
-        box-shadow: -2px -2px 2px black;
-        background-color: rgb(100, 150, 100);
 
 
-    }
-
-    #myCanvas {
-        height: 90vh;
-        background-image: url("img/map1.png");
-        background-size: contain;
-        background-repeat: no-repeat;
-        box-shadow: -2px -2px 2px black;
-    }
-
-    .house {
-        box-shadow: 0px 0px 2px black;
-        height: 25%;
-    }
 
     .main {
         height: 100vh;
@@ -101,10 +52,24 @@ include_once("connection.php");
         top: 0;
         left: 0;
         background-color: white;
+        z-index: 2;
     }
 
     #logoutbtn {
         transform: rotate(180deg);
+    }
+
+    #map {
+        position: fixed;
+        height: 100vh;
+        z-index: 1;
+        top: 0;
+        left: 0; 
+    }
+
+    h1 {
+        position: fixed;
+        z-index: 2;
     }
 </style>
 
@@ -114,15 +79,20 @@ include_once("connection.php");
                 src="img/homepage.png" class="img-thumbnail img-fluid"></button>
         <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"
                 class="img-thumbnail img-fluid"></button>
-    </div>
-
-    <div class="main container">
-        <h1 class="w-100 text-center">Interactive Map</h1>
-        <div class="row container" >
-
-          
+        <div class="controlbbar" id="controlbar" onclick="addhouseenable()">
+            <input type="checkbox" id="addhousecheckbox" style="display: none;">
+            <img src="img/addhouse.png" alt="" class="img-thumbnail img-fluid" id="addhouseimg">
 
         </div>
+    </div>
+
+
+
+
+    <h2 class="w-100 text-center">Interactive Map</h2   >
+
+    <div id="map">
+
     </div>
 
 
@@ -131,7 +101,11 @@ include_once("connection.php");
 <script src="../js/bootstrap.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="canvas.js"></script>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?KEY=AIzaSyDRSYAAW1yoCMMxYuPcz0nr2_Is7K-b_A4&map_ids=4c3a2990a9d5267d&callback=initMap">
+    </script>
+<script type="text/javascript" src="map.js"></script>
 
 
 <script>
@@ -144,30 +118,23 @@ include_once("connection.php");
         }
     }
 
+    function addhouseenable(){
+
+       if(document.getElementById("addhousecheckbox").checked){
+        document.getElementById("addhousecheckbox").checked=false;
+        document.getElementById("addhouseimg").src="img/addhouse1.png";
+        $("#map").css("cursor", "crosshair");
+       }else{
+        document.getElementById("addhousecheckbox").checked=true;
+        document.getElementById("addhouseimg").src="img/addhouse.png";
+        $("#map").css("cursor", "auto");
 
 
-    function expandandchange(x) {
-        $(".zoneoptions").slideUp(500);
-        $("#zoneoption" + x).slideDown(500);
-        var xhttps = new XMLHttpRequest();
-        xhttps.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("housenavholder").innerHTML = this.responseText;
-            }
-        };
-        xhttps.open("GET", "getzone.php?zone=" + x);
-        xhttps.send();
-
+       }
     }
 
-    function checkradio(x){
-        $(".house").css("background-color","#FFC5C5");
-        $("#houseno-"+x).css("background-color","rgb(120,40,40)");
-        $("#houseno-"+x).css("color","white");
-        var radiobutt =document.getElementById("houseselector-" + x);
-        radiobutt.checked = true;
 
-    }
+
 
 
 

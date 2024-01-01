@@ -25,7 +25,7 @@ if (isset($_POST['username'])) {
             $error = "Incorrect Password";
 
         } else {
-            $_SESSION['authadmin'] = true;
+            $_SESSION['auth'] = true;
 
 
             header('Location:dashboard.php');
@@ -73,24 +73,23 @@ if (isset($_POST['username'])) {
         box-shadow: 2px 2px 2px black;
     }
 
-    .logo{
+    .logo {
         position: fixed;
-   
+
         top: 0;
         left: 0;
     }
 
-    .logo img{
+    .logo img {
         width: 45%;
-        
+
     }
 </style>
 
 <body>
-<div class="logo">
+    <div class="logo">
 
-<img src="../img/logo1.png" class="mt-4">
-</div>
+    </div>
     <div class=" bg-light p-5 main">
 
         <div style="background-color: white; height: 50vh; width: 40%;" class="container rounded sec mt-5">

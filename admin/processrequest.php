@@ -4,6 +4,10 @@ include_once("connection.php");
 $sql = "SELECT * FROM tbl_docrequest WHERE id = '" . $_GET['id'] . "'";
 $result = $mysqli->query($sql);
 $row = $result->fetch_assoc();
+if(!isset($_SESSION["auth"])){
+    header("location: index.php");
+}
+
 if ($row["document_type"] == "3") {
     header('Location:indigencycertificate.php?id=' . $_GET['id']);
 }
@@ -384,9 +388,6 @@ if ($row["document_type"] == "8") {
             xhttps.open("GET", "actionpage1.php?doctype=2&id=" + id + "&durationofstay=" + durationofstay + "&reasonofstay=" + reasonofstay + 
             "&birthplace=" + birthplace + "&spouse=" + spouse + "&parents=" + parents + "&birthmark=" + birthmark + "&purpose=" + purposeofclearance);
             xhttps.send();
-
-        
-
         
     }
     function proceedresidency(id) {

@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once("connection.php");
+if(!isset($_SESSION["auth"])){
+    header("location: index.php");
+}
+
 ?>
 
 <!DOCTYPE html>

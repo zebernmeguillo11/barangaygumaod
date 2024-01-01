@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once("connection.php");
+if (!isset($_SESSION["auth"])) {
+    header("location: index.php");
+}
+
 if (!isset($_SESSION['page'])) {
     $_SESSION['page'] = 1;
 }
@@ -26,24 +30,26 @@ $_SESSION['limit1'] = 30;
     <link rel="stylesheet" href="../css/bootstrap-grid.css">
 </head>
 <style>
-    .feedback{
+    .feedback {
         float: left;
         display: none;
         color: red;
     }
-     body {
+
+    body {
         background-color: #FFC5C5;
 
     }
 
 
-    .familydata:hover{
+    .familydata:hover {
         cursor: pointer;
     }
+
     .mainsection {
         background-color: #00A1A1;
         box-shadow: 2px 2px 2px black;
-        
+
     }
 
     .main {
@@ -97,7 +103,7 @@ $_SESSION['limit1'] = 30;
         float: left;
     }
 
-    .nav{
+    .nav {
         width: 4%;
         padding: 0px;
         position: fixed;
@@ -106,28 +112,29 @@ $_SESSION['limit1'] = 30;
         background-color: white;
     }
 
-    #logoutbtn{
+    #logoutbtn {
         transform: rotate(180deg);
     }
 
-    .btnnav:hover{
+    .btnnav:hover {
         background-color: rgb(150, 150, 150);
     }
-
 </style>
 
 <body>
     <div class="nav">
-        <button class="btn btnnav p-0" title="Go to Home"  onClick="location.href='dashboard.php'"><img src="img/homepage.png"  class="img-thumbnail img-fluid"></button>
-        <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"  class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" title="Go to Home" onClick="location.href='dashboard.php'"><img
+                src="img/homepage.png" class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"
+                class="img-thumbnail img-fluid"></button>
     </div>
     <div class="main">
         <h1 class="w-100 text-center">Resident Management</h1>
         <div class="container mainsection p-4 rounded">
             <button class="btn bg-dark text-light my-2" onClick="switchtores()">Switch to Resident View</button>
             <button class="btn bg-dark text-light my-2" onClick="switchtofam()">Switch to Family View</button>
-            <label for="search" class=" w-50 p-1 my-2 text-center" >Search:<input type="text" placeholder="Enter Lastname"
-                    name="search" id="search" onkeyup="searchfamily(this.value)"></label>
+            <label for="search" class=" w-50 p-1 my-2 text-center">Search:<input type="text"
+                    placeholder="Enter Lastname" name="search" id="search" onkeyup="searchfamily(this.value)"></label>
             <div class="section1" id="section1">
                 <table class="w-100 text-center table table-striped table-hover table-light">
                     <thead class="thead-dark text-center">
@@ -156,23 +163,24 @@ $_SESSION['limit1'] = 30;
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <tr class="row">
-                            <td  class="col-1"><input type="checkbox" title="Select" class="famcheck"
+                            <td class="col-1"><input type="checkbox" title="Select" class="famcheck"
                                     value="<?php echo $row["houseNumber"]; ?>"></td>
 
-                            <td  class="col-2" id="houseno-<?php echo $row['houseNumber']; ?>" class="familydata" onclick="showfamily(this.id)">
+                            <td class="col-2" id="houseno-<?php echo $row['houseNumber']; ?>" class="familydata"
+                                onclick="showfamily(this.id)">
                                 <?php echo $row["houseNumber"]; ?>
                             </td>
-                            <td class="col-6" id="housename-<?php echo $row['houseNumber']; ?>" >
+                            <td class="col-6" id="housename-<?php echo $row['houseNumber']; ?>">
                                 <?php echo $row["householdName"]; ?>
                             </td>
-                            <td class="col-1" id="purok-<?php echo $row['houseNumber']; ?>" >
+                            <td class="col-1" id="purok-<?php echo $row['houseNumber']; ?>">
                                 <?php echo $row["purok"]; ?>
                             </td>
-                            <td class="col-2" id="member-<?php echo $row['houseNumber']; ?>" >
-                                <?php 
-                                $query = "SELECT * FROM tbl_familymember WHERE houseNumber = '".$row['houseNumber']."'";
+                            <td class="col-2" id="member-<?php echo $row['houseNumber']; ?>">
+                                <?php
+                                $query = "SELECT * FROM tbl_familymember WHERE houseNumber = '" . $row['houseNumber'] . "'";
                                 $resultnew = $mysqli->query($query);
-                                echo mysqli_num_rows($resultnew); 
+                                echo mysqli_num_rows($resultnew);
                                 ?>
                             </td>
                         </tr>
@@ -267,7 +275,8 @@ $_SESSION['limit1'] = 30;
                                 <?php echo $row1["Gender"]; ?>
                             </td>
                             <td>
-                            <input id="<?php echo "bday".$row1["resident_id"];?>" type="date" value="<?php echo $row1["Birthdate"]; ?>" style="display:none;">
+                                <input id="<?php echo "bday" . $row1["resident_id"]; ?>" type="date"
+                                    value="<?php echo $row1["Birthdate"]; ?>" style="display:none;">
                                 <?php
                                 $date = date_create($row1['Birthdate']);
                                 echo date_format($date, "M d, Y"); ?>
@@ -353,6 +362,11 @@ $_SESSION['limit1'] = 30;
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
                 </select>
             </div>
 
@@ -569,31 +583,31 @@ $_SESSION['limit1'] = 30;
 <script type="text/javascript" src="jquery.js"></script>
 
 <script>
-    function searchfamily(x){
-        if(x.trim()!=""){
-            if(x.trim().length > 1){
+    function searchfamily(x) {
+        if (x.trim() != "") {
+            if (x.trim().length > 1) {
 
-        var xhttps = new XMLHttpRequest();
-        xhttps.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("section1").innerHTML = this.responseText;
+                var xhttps = new XMLHttpRequest();
+                xhttps.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("section1").innerHTML = this.responseText;
+                    }
+                };
+                xhttps.open("GET", "searchfamilypage.php?searchkey=" + x);
+                xhttps.send();
             }
-        };
-        xhttps.open("GET", "searchfamilypage.php?searchkey=" + x);
-        xhttps.send();
-    }    
 
-        }else{
+        } else {
             getpage();
         }
     }
-    function showfamily(id){
-        var houseno =document.getElementById(id).innerHTML.trim();
+    function showfamily(id) {
+        var houseno = document.getElementById(id).innerHTML.trim();
         window.location.href = "showfamily.php?houseno=" + houseno;
     }
-    function logout(){
-        var conf =confirm("Logout?");
-        if(conf){
+    function logout() {
+        var conf = confirm("Logout?");
+        if (conf) {
             window.location.href = "logout.php";
         }
     }
@@ -798,7 +812,7 @@ $_SESSION['limit1'] = 30;
                         $("#successfeedback").fadeIn(500).fadeOut(8000);
                         $('#addfamilyname').val('');
                         $('#addhouseno').val('');
-                    getpage();
+                        getpage();
 
 
 
@@ -892,9 +906,9 @@ $_SESSION['limit1'] = 30;
                         }
                     }
                     xhttps.open("GET", "actionpage.php?deletehouseno=" + id);
-                xhttps.send();
+                    xhttps.send();
                 }
-               
+
 
             });
 
@@ -916,7 +930,7 @@ $_SESSION['limit1'] = 30;
                         }
                     }
                     xhttps.open("GET", "actionpage.php?deleteres=" + id);
-                xhttps.send();
+                    xhttps.send();
                 };
 
 

@@ -1,3 +1,13 @@
+<?php
+session_start();
+if(!isset($_SESSION["auth"])){
+    header("location: index.php");
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,7 +121,7 @@
 
         </div>
         <div class="col-4 my-2 ">
-            <div class="container my-4 p-2 section" onClick="location.href='interactivemap.php'">
+            <div class="container my-4 p-2 section" onClick="location.href='interactivemap.html '">
                 <h6>Interactive Map</h6>
                 <img src="img/map1.png" class="img-thumbnail img-fluid">
 

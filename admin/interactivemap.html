@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-grid.css">
+
+    <style>
+        html {
+            box-sizing: border-box;
+            font-size: 100%;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 90vh;
+        }
+
+        .marker-desc {
+            width: 300px;
+            min-height: 40px;
+            text-align: justify;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .nav {
+            width: 4%;
+            padding: 0px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: white;
+            z-index: 2;
+        }
+
+        .custommodal {
+            position: fixed;
+            right: 0%;
+            top: 0%;
+            width: 400px;
+            height: 500px;
+
+            background-color: white;
+            box-shadow: 2px 10px 10px black;
+            z-index: 10;
+            display: none;
+            text-overflow: scroll;
+
+        }
+
+        #dropdown {
+            background-color: rgb(220, 220, 220);
+            height: 100px;
+            overflow-y: scroll;
+            display: none;
+        }
+
+        .closebtn {
+            border: none;
+            background-color: white;
+            float: right;
+
+        }
+
+
+        .custommodal h5 {
+            float: left;
+        }
+
+        .inputdiv {
+            float: left;
+        }
+
+        .feedback {
+            position: fixed;
+            bottom: 40%;
+            font-weight: bold;
+            text-align: center;
+            font-size: 30px;
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <button class="btn btnnav p-0" title="Go to Home" onClick="location.href='dashboard.php'"><img
+                src="img/homepage.png" class="img-thumbnail img-fluid"></button>
+        <button class="btn btnnav p-0" id="logoutbtn" title="Logout" onClick="logout()"><img src="img/logout.png"
+                class="img-thumbnail img-fluid"></button>
+        <div class="controlbbar" id="controlbar">
+            <input type="checkbox" id="addhousecheckbox" style="display: none;">
+            <img src="img/addhouse.png" alt="" class="img-thumbnail img-fluid" id="addhouseimg">
+
+        </div>
+    </div>
+    <h2 style="width: 50%; margin: auto; text-align: center;">
+        Interactive Map
+    </h2>
+    <div id="map"></div>
+    <div class="custommodal p-2" id="addmarkermodal">
+        <h5 class="w-50 p-3">Search Family</h5>
+        <div class="w-25 p-2 " style="float:right">
+            <button class="closebtn w-50 py-1" onclick="closemodal()"><img src="img/close.png"
+                    class="img-thumbnail img-fluid"></button>
+        </div>
+        <div class="inputdiv container">
+            <label for="residentID" class="form-label" style="float: left;">Search Family</label>
+            <input type="text" class="form-control" id="familyhouseno" placeholder="Search Familyname"
+                onkeyup="showdropdown1(this)" autocomplete="off" style="z-index: 3;">
+            <div id="dropdown1">
+
+
+
+            </div>
+
+            <input type="hidden" id="familyidhidden" value="0">
+        </div>
+        <div class="inputdiv container">
+            <label for="coordinates" class="form-label" style="float: left;">Coordinates</label>
+            <input type="text" class="form-control" id="coordinates" disable autocomplete="off">
+        </div>
+        <div class="w-100 text-center my-5">
+            <button class="btn btn-dark mt-4" onclick="savelocation()">Save Location</button>
+
+        </div>
+    </div>
+
+    <p class="w-100 feedback">Save!!</p>
+</body>
+<script src="../js/bootstrap.bundle.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+
+<script src="map.js"></script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALWBIWVMvpVNBvle7Jcd3jUzJLSd9Cp7U&map_ids=4c3a2990a9d5267d&callback=initMap"></script>
+<script>
+
+    function showdropdown1(e) {
+        var searchkey = e.value;
+        if (searchkey.length >= 2) {
+            $("#dropdown1").slideDown(400);
+            var xhttps = new XMLHttpRequest();
+            xhttps.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("dropdown1").innerHTML = this.responseText;
+                }
+            };
+            xhttps.open("GET", "searchfam.php?searchkey=" + searchkey);
+            xhttps.send();
+
+        } else {
+            $("#dropdown").slideUp(400);
+
+        }
+    }
+
+
+    function logout() {
+        
+        var conf =  confirm("Logout?");
+        if (conf) {
+            window.location.href = "logout.php";
+        }
+    }
+
+
+    function showcustommodal(latlang) {
+        document.getElementById("coordinates").value = latlang;
+        $("#addmarkermodal").slideDown(500);
+        $("#addmarkermodal").css("z-index", "4");
+    }
+
+    function closemodal() {
+        $("#addmarkermodal").slideUp(500);
+        $("#addmarkermodal").css("z-index", "0");
+
+    }
+
+
+    function choosefam(e) {
+
+        var fullname = document.getElementById("family_" + e).innerHTML;
+
+        document.getElementById("familyhouseno").value = fullname.trim();
+        document.getElementById("familyidhidden").value = e;
+
+    }
+
+    function savelocation() {
+        var houseno = document.getElementById("familyidhidden").value;
+        var latlng = document.getElementById("coordinates").value;
+        var xhttps = new XMLHttpRequest();
+        xhttps.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                $(".feedback").fadeIn(300).fadeOut(10000);
+                $("#addmarkermodal").slideUp(500);
+                $("#addmarkermodal").css("z-index", "0");
+
+
+            }
+        };
+        xhttps.open("GET", "savecoordinate.php?houseno=" + houseno + "&latlng=" + latlng);
+        xhttps.send();
+
+    }
+
+
+
+
+
+
+
+</script>
+
+
+</html>
